@@ -40,12 +40,9 @@ public class ShoppingCartProductOfferFeatureTest {
         cart.add(DOVE_SOAP, 3);
         cart.add(AXE_DEO, 2);
 
-        assertThat(cart.cartAmount())
-                .isEqualByComparingTo(BigDecimal.valueOf(292.46).setScale(2, RoundingMode.HALF_UP));
-        assertThat(cart.taxAmount())
-                .isEqualByComparingTo(BigDecimal.valueOf(32.50).setScale(2, RoundingMode.HALF_UP));
-        assertThat(cart.discount())
-                .isEqualByComparingTo(BigDecimal.valueOf(39.99).setScale(2, RoundingMode.HALF_UP));
+        assertBigDecimalEquals(cart.cartAmount(), 292.46);
+        assertBigDecimalEquals(cart.taxAmount(), 32.50);
+        assertBigDecimalEquals(cart.discount(), 39.99);
     }
 
     @Test
@@ -54,11 +51,12 @@ public class ShoppingCartProductOfferFeatureTest {
 
         cart.add(DOVE_SOAP, 2);
 
-        assertThat(cart.cartAmount())
-                .isEqualByComparingTo(BigDecimal.valueOf(67.49).setScale(2, RoundingMode.HALF_UP));
-        assertThat(cart.discount())
-                .isEqualByComparingTo(BigDecimal.valueOf(20.00).setScale(2, RoundingMode.HALF_UP));
-        assertThat(cart.taxAmount())
-                .isEqualByComparingTo(BigDecimal.valueOf(7.50).setScale(2, RoundingMode.HALF_UP));
+        assertBigDecimalEquals(cart.cartAmount(), 67.49);
+        assertBigDecimalEquals(cart.discount(), 20.00);
+        assertBigDecimalEquals(cart.taxAmount(), 7.50);
+    }
+
+    private void assertBigDecimalEquals(BigDecimal actual, double expected) {
+        assertThat(actual).isEqualByComparingTo(BigDecimal.valueOf(expected).setScale(2, RoundingMode.HALF_UP));
     }
 }

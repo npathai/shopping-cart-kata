@@ -37,11 +37,12 @@ public class ShoppingCartOfferFeatureTest {
         cart.add(DOVE_SOAP, 5);
         cart.add(AXE_DEO, 4);
 
-        assertThat(cart.cartAmount())
-                .isEqualByComparingTo(BigDecimal.valueOf(503.93).setScale(2, RoundingMode.HALF_UP));
-        assertThat(cart.taxAmount())
-                .isEqualByComparingTo(BigDecimal.valueOf(56.00).setScale(2, RoundingMode.HALF_UP));
-        assertThat(cart.discount())
-                .isEqualByComparingTo(BigDecimal.valueOf(111.98).setScale(2, RoundingMode.HALF_UP));
+        assertBigDecimalEquals(cart.cartAmount(), 503.93);
+        assertBigDecimalEquals(cart.taxAmount(), 56.00);
+        assertBigDecimalEquals(cart.discount(), 111.98);
+    }
+
+    private void assertBigDecimalEquals(BigDecimal actual, double expected) {
+        assertThat(actual).isEqualByComparingTo(BigDecimal.valueOf(expected).setScale(2, RoundingMode.HALF_UP));
     }
 }
